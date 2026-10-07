@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Buddy Finder</title>
+</head>
+
+<body>
+
+<h2>Travel Buddy Finder</h2>
+
+<h3>Add Travel Buddy</h3>
+
+<form id="buddyForm">
+
+    Name:
+    <input type="text" id="name" required>
+    <br><br>
+
+    Age:
+    <input type="number" id="age" required>
+    <br><br>
+
+    Destination:
+    <input type="text" id="destination" required>
+    <br><br>
+
+    Travel Date:
+    <input type="date" id="travelDate" required>
+    <br><br>
+
+    Interests:
+    <input type="text" id="interests" placeholder="Hiking, Photography">
+    <br><br>
+
+    <button type="submit">Add Buddy</button>
+
+</form>
+
+<hr>
+
+<h3>Search Travel Buddies</h3>
+
+<input type="text" id="search">
+<button onclick="searchBuddy()">Search</button>
+<button onclick="loadBuddies()">Show All</button>
+
+<h3>Available Travel Buddies</h3>
+
+<div id="result"></div>
+
+<script>
+
+document.getElementById("buddyForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const buddy = {
+        name: document.getElementById("name").value,
+        age: document.getElementById("age").value,
+        destination: document.getElementById("destination").value,
+        travelDate: document.getElementById("travelDate").value,
+        interests: document.getElementById("interests").value
+    };
+
+    const response = await fetch("/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(buddy)
+    });
+
+    const data = await response.json();
+
+    alert(data.message);
+
+    document.getElementById("buddyForm").reset();
+
+    loadBuddies();
+});
+
+
+// Display all buddies
+async function loadBuddies() {
+
+    const response = await fetch("/buddies");
+    const buddies = await response.json();
+
+    displayBuddies(buddies);
+}
+
+
+// Search buddies
+async function searchBuddy() {
+
+    const destination = document.getElementById("search").value;
+
+    if (destination === "") {
+        loadBuddies();
+        return;
+    }
+
+    const response = await fetch("/search/" + destination);
+    const buddies = await response.json();
+
+    displayBuddies(buddies);
+}
+
+
+// Display results
+function displayBuddies(buddies) {
+
+    let output = "";
+
+    if (buddies.length === 0) {
+        output = "<p>No travel buddies found.</p>";
+    }
+
+    buddies.forEach(buddy => {
+
+        output += `
+            <div>
+                <b>Name:</b> ${buddy.name}<br>
+                <b>Age:</b> ${buddy.age}<br>
+                <b>Destination:</b> ${buddy.destination}<br>
+                <b>Travel Date:</b> ${buddy.travelDate}<br>
+                <b>Interests:</b> ${buddy.interests}
+                <hr>
+            </div>
+        `;
+
+    });
+
+    document.getElementById("result").innerHTML = output;
+}
+
+loadBuddies();
+
+</script>
+
+</body>
+</html>
