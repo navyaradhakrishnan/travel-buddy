@@ -68,13 +68,9 @@ app.get("/search/:destination", async (req, res) => {
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
         console.log("MongoDB Connected");
-
-        const port = process.env.PORT || 3000;
-
-        app.listen(port, () => {
-            console.log(`Server is running on port ${port}`);
-        });
     })
     .catch((error) => {
         console.log("MongoDB connection error:", error.message);
     });
+
+module.exports = app;
