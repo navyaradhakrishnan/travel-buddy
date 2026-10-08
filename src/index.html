@@ -2,9 +2,68 @@
 <html>
 <head>
     <title>Travel Buddy Finder</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f5f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px #ccc;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2563eb;
+        }
+
+        h3 {
+            color: #333;
+            margin-top: 25px;
+        }
+
+        input {
+            padding: 8px;
+            margin-top: 5px;
+            width: 95%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 9px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        #result div {
+            background: #f8fafc;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container">
 
 <h2>Travel Buddy Finder</h2>
 <p>Find travel partners who share your destination and interests.</p>
@@ -140,6 +199,6 @@ function displayBuddies(buddies) {
 loadBuddies();
 
 </script>
-
+</div>
 </body>
 </html>
